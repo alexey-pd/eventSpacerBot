@@ -9,7 +9,7 @@ setcommands =
 
 ## Welcome Feature
 
-welcome = Welcome!
+welcome = Hello vercel!
 
 ## Language Feature
 

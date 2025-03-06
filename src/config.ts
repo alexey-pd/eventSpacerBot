@@ -28,8 +28,8 @@ const configSchema = v.variant('botMode', [
   v.pipe(
     v.object({
       botMode: v.literal('webhook'),
+      botWebhook: v.string(),
       ...baseConfigSchema.entries,
-      botWebhook: v.pipe(v.string(), v.url()),
       botWebhookSecret: v.pipe(v.string(), v.minLength(12)),
       serverHost: v.optional(v.string(), '0.0.0.0'),
       serverPort: v.optional(v.pipe(v.string(), v.transform(Number), v.number()), '80'),
@@ -86,9 +86,7 @@ function createConfigFromEnvironment() {
 
   try {
     // @ts-expect-error create config from environment variables
-    const config = createConfig(convertKeysToCamelCase(process.env))
-
-    return config
+    return createConfig(convertKeysToCamelCase(process.env))
   }
   catch (error) {
     throw new Error('Invalid config', {
