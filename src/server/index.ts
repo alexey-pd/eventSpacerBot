@@ -56,7 +56,6 @@ export function createServer(dependencies: Dependencies) {
   })
 
   server.get('/', c => c.json({ status: true }))
-
   if (config.isWebhookMode) {
     server.get(`/${bot.token}`, async (c) => {
       const hostname = c.req.header('x-forwarded-host')

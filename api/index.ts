@@ -1,6 +1,6 @@
 import process from 'node:process'
 import { createBot } from '#root/bot/index.js'
-import { createConfig } from '#root/config.js'
+import { convertKeysToCamelCase, createConfig } from '#root/config.js'
 import { logger } from '#root/logger.js'
 import { createServer } from '#root/server/index.js'
 import { handle } from '@hono/node-server/vercel'
