@@ -9,7 +9,8 @@ setcommands =
 
 ## Welcome Feature
 
-welcome = Hello vercel!
+welcome = Welcome! This bot helps you manage calendar events in your channel.
+calendar = Add the bot to a channel and use /calendar to add a calendar url.
 
 ## Language Feature
 
