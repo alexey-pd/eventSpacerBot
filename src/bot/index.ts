@@ -4,6 +4,7 @@ import type { Logger } from '#root/logger.js'
 import type { BotConfig } from 'grammy'
 import { adminFeature } from '#root/bot/features/admin.js'
 import { calendarFeature } from '#root/bot/features/calendar.js'
+import { eventsFeature } from '#root/bot/features/events/index.js'
 import { languageFeature } from '#root/bot/features/language.js'
 import { unhandledFeature } from '#root/bot/features/unhandled.js'
 import { welcomeFeature } from '#root/bot/features/welcome.js'
@@ -65,6 +66,7 @@ export function createBot(token: string, dependencies: Dependencies, botConfig?:
   protectedBot.use(welcomeFeature)
   protectedBot.use(adminFeature)
   protectedBot.use(calendarFeature)
+  protectedBot.use(eventsFeature)
   if (isMultipleLocales)
     protectedBot.use(languageFeature)
 
