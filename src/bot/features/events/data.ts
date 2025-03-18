@@ -37,16 +37,31 @@ export function filterEventsByWeek(events?: VEvent[], offset: number = 0): VEven
   }).sort((a, b) => a.start.getTime() - b.start.getTime()) || []
 }
 
+function formatTime(date: Date, short: boolean = false) {
+  const options: Intl.DateTimeFormatOptions = {
+    hour: 'numeric',
+    minute: undefined,
+    hour12: true,
+  }
+  const time = date.toLocaleTimeString('en-US', options)
+  return short ? time.replace(/ (AM|PM)$/, '') : time
+}
+
 export function formatEvents(events: VEvent[]): string {
   if (events.length === 0)
     return 'No events scheduled.'
 
   const groupedEvents = events.reduce<Record<string, string[]>>((acc, event) => {
     const date = formatDate(event.start)
-    const time = `${event.start.toISOString().split('T')[1].slice(0, 5)}-${event.end.toISOString().split('T')[1].slice(0, 5)}`
-    const eventDetails = `${time} *${event.summary}*`
+    const startTime = formatTime(event.start, true)
+    const endTime = formatTime(event.end)
+    const timeRange = `${startTime}–${endTime}`
+    const eventDetails = `${timeRange} *${event.summary}*`
 
-    acc[date] = acc[date] || []
+    if (!acc[date]) {
+      acc[date] = []
+    }
+
     acc[date].push(eventDetails)
 
     return acc
