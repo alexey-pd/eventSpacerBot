@@ -42,6 +42,7 @@ function formatTime(date: Date, short: boolean = false) {
     hour: 'numeric',
     minute: undefined,
     hour12: true,
+    timeZone: 'Europe/Belgrade',
   }
   const time = date.toLocaleTimeString('en-US', options)
   return short ? time.replace(/ (AM|PM)$/, '') : time
