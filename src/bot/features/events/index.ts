@@ -14,11 +14,15 @@ const composer = new Composer<Context>()
 
 const feature = composer.chatType(['channel', 'group'])
 
-async function getChatCalendarUrl(chatId: number) {
-  return kv.get<string>(`calendar:${chatId}`)
+export async function getChatCalendarUrl(chatId: number | string) {
+  return kv.get<string>(`${chatId}`)
 }
 
-async function readEvents(chatId: number) {
+export async function setChatCalendarUrl(chatId: number | string, url: string) {
+  return kv.set<string>(`${chatId}`, url)
+}
+
+export async function readEvents(chatId: number | string) {
   const url = await getChatCalendarUrl(chatId)
   if (!url)
     return []
@@ -30,7 +34,7 @@ feature.command('events', logHandle('command-events'), async (ctx) => {
   if (!chatId)
     return ctx.reply('chatId is empty')
 
-  const url = await kv.get<string>(`calendar:${chatId}`)
+  const url = await getChatCalendarUrl(chatId)
 
   if (!url)
     return ctx.reply('/calendar ics public url')

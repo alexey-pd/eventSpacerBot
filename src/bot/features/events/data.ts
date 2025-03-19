@@ -48,27 +48,11 @@ function formatTime(date: Date, short: boolean = false) {
   return short ? time.replace(/ (AM|PM)$/, '') : time
 }
 
-export function formatEvents(events: VEvent[]): string {
+export function formatEvents(events: VEvent[], emptyLabel: string = 'no events found!') {
   if (events.length === 0)
-    return 'No events scheduled.'
+    return emptyLabel
 
-  const groupedEvents = events.reduce<Record<string, string[]>>((acc, event) => {
-    const date = formatDate(event.start)
-    const startTime = formatTime(event.start, true)
-    const endTime = formatTime(event.end)
-    const timeRange = `${startTime}–${endTime}`
-    const eventDetails = `${timeRange} *${event.summary}*`
-
-    if (!acc[date]) {
-      acc[date] = []
-    }
-
-    acc[date].push(eventDetails)
-
-    return acc
-  }, {})
-
-  return Object.entries(groupedEvents)
-    .map(([date, events]) => `*${date}*\n${events.join('\n')}`)
-    .join('\n\n')
+  return events.map((event) => {
+    return `*${formatDate(event.start)}*\n${formatTime(event.start, true)}–${formatTime(event.end)} *${event.summary}*`
+  }).join('\n\n')
 }

@@ -1,4 +1,5 @@
 import type { Context } from '#root/bot/context.js'
+import { getChatCalendarUrl, setChatCalendarUrl } from '#root/bot/features/events/index.js'
 import { logHandle } from '#root/bot/helpers/logging.js'
 import { kv } from '@vercel/kv'
 import { Composer } from 'grammy'
@@ -17,7 +18,7 @@ feature.command('calendar', logHandle('command-calendar-add'), async (ctx) => {
   if (!chatId)
     return ctx.reply('chatId is empty', replyConfig)
 
-  await kv.set(`calendar:${chatId}`, url)
+  await setChatCalendarUrl(chatId, url)
 
   return ctx.reply('Calendar added!')
 })
@@ -27,7 +28,7 @@ feature.command('check', logHandle('command-calendar-check'), async (ctx) => {
   if (!chatId)
     return ctx.reply('chatId is empty')
 
-  const url = await kv.get<string>(`calendar:${chatId}`)
+  const url = await getChatCalendarUrl(chatId)
 
   if (!url)
     return ctx.reply('/calendar ics public url', replyConfig)
@@ -40,7 +41,7 @@ feature.command('remove', logHandle('command-calendar-remove'), async (ctx) => {
   if (!chatId)
     return ctx.reply('chatId is empty')
 
-  await kv.del(`calendar:${chatId}`)
+  await kv.del(`${chatId}`)
 
   return ctx.reply('Calendar removed', replyConfig)
 })
