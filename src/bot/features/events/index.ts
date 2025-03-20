@@ -12,7 +12,7 @@ import { Composer } from 'grammy'
 
 const composer = new Composer<Context>()
 
-const feature = composer.chatType(['channel', 'group'])
+const feature = composer.chatType(['channel', 'group', 'supergroup'])
 
 export async function getChatCalendarUrl(chatId: number | string) {
   return kv.get<string>(`${chatId}`)
