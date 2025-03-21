@@ -52,7 +52,10 @@ export function formatEvents(events: VEvent[], emptyLabel: string = 'no events f
   if (events.length === 0)
     return emptyLabel
 
-  return events.map((event) => {
-    return `*${formatDate(event.start)}*\n${formatTime(event.start, true)}–${formatTime(event.end)} *${event.summary}*`
-  }).join('\n\n')
+  return Object.entries(Object.groupBy(events, e => formatDate(e.start)))
+    .map(([date, group]) =>
+      `*${date}*\n${group?.map(e => `${formatTime(e.start, true)}–${formatTime(e.end)} *${e.summary}*`,
+      ).join('\n')}`,
+    )
+    .join('\n\n')
 }
