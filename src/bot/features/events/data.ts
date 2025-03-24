@@ -48,7 +48,7 @@ function formatTime(date: Date, short: boolean = false) {
   return short ? time.replace(/ (AM|PM)$/, '') : time
 }
 
-export function formatEvents(events: VEvent[], emptyLabel: string = 'no events found!') {
+export function formatEvents(events: VEvent[], emptyLabel: string = '') {
   if (events.length === 0)
     return emptyLabel
 

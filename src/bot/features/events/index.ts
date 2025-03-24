@@ -48,13 +48,13 @@ feature.callbackQuery('today', async (ctx) => {
     return ctx.reply('chatId is empty')
 
   const events = await readEvents(ctx.chat.id)
-  await ctx.editMessageText(formatEvents(filterToday(events)), { parse_mode: 'Markdown' })
+  await ctx.editMessageText(formatEvents(filterToday(events), 'No events for today!'), { parse_mode: 'Markdown' })
 })
 
 feature.callbackQuery(/^week_(-?\d+)$/, async (ctx) => {
   const offset = Number.parseInt(ctx.match[1], 10)
   const events = await readEvents(ctx.chat.id)
-  await ctx.editMessageText(formatEvents(filterEventsByWeek(events, offset)), { parse_mode: 'Markdown' })
+  await ctx.editMessageText(formatEvents(filterEventsByWeek(events, offset), 'No events found!'), { parse_mode: 'Markdown' })
 })
 
 export { composer as eventsFeature }

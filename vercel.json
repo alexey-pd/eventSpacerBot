@@ -12,7 +12,7 @@
   "crons": [
     {
       "path": "/api/send-events",
-      "schedule": "00 09 * * *"
+      "schedule": "00 08 * * *"
     }
   ]
 }
